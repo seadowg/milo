@@ -5,7 +5,7 @@ import scala.collection.mutable.ArrayBuffer
 class Event[T] {
   private val callbacks: ArrayBuffer[T => Unit] = new ArrayBuffer()
   
-  protected def bind(func: T => Unit) {
+  def bind(func: T => Unit) {
     callbacks += func
   }
   

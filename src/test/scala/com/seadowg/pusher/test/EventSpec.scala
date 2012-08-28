@@ -7,10 +7,9 @@ class EventSpec extends Specification {
   "Event" should {
     "not execute callbacks without trigger" in {
       var executed = false
-      val event = new Event[Int] {
-        this.bind {
-          value => executed = true
-        }
+      val event = new Event[Int]
+      event.bind {
+        value => executed = true
       }
       
       executed must beFalse
