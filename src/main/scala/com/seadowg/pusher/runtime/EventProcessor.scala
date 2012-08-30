@@ -1,16 +1,15 @@
 package com.seadowg.pusher.runtime
 
-import scala.actors.Actor
-import scala.actors.Actor._
+import com.seadowg.pusher.events.Event
 
 object EventProcessor {
+  val worker = new Worker()
   
-}
-
-class Worker extends Actor {
-  def act() {
-    eventloop {
-      case work: (() => Unit) => reply(work())
-    }
+  def start() {
+    worker.start()
+  }
+  
+  def process[T](event: Event[T], value: T) {
+    event.trigger(value)
   }
 }

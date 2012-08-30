@@ -17,26 +17,22 @@ class EventSpec extends Specification {
     
     "execute callbacks on trigger" in {
       var executed = false
-      val event = new Event[Int] {
-        this.bind {
-          value => executed = true
-        }
-        
-        this.trigger(0)
+      val event = new Event[Int]
+      event.bind {
+        value => executed = true
       }
+      event.trigger(0)
       
       executed must beTrue
     }
     
     "passes the correct value to callbacks" in {
       var passed = 0
-      val event = new Event[Int] {
-        this.bind {
-          value => passed = value
-        }
-        
-        this.trigger(1)
+      val event = new Event[Int]
+      event.bind {
+        value => passed = value
       }
+      event.trigger(1)
       
       passed mustEqual 1
     }
