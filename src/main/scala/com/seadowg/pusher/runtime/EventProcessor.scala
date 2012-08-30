@@ -4,19 +4,13 @@ import scala.actors.Actor
 import scala.actors.Actor._
 
 object EventProcessor {
-  def start() {
-    Processor.start()
-  }
   
-  private[pusher] def add(work: () => Unit) {
-    Processor ! work
-  }
-  
-  private object Processor extends Actor {
-    def act() {
-      eventloop {
-        case work: (() => Unit) => work()
-      }
+}
+
+class Worker extends Actor {
+  def act() {
+    eventloop {
+      case work: (() => Unit) => reply(work())
     }
   }
 }
