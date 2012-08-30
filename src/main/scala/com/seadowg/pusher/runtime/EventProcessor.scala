@@ -10,6 +10,8 @@ object EventProcessor {
   }
   
   def process[T](event: Event[T], value: T) {
-    event.trigger(value)
+    worker ! {
+      () => event.trigger(value)
+    }
   }
 }
