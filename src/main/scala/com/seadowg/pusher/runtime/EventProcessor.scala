@@ -1,9 +1,11 @@
 package com.seadowg.pusher.runtime
 
+import scala.actors.Actor
+import scala.actors.Actor._
 import com.seadowg.pusher.events.Event
 
 object EventProcessor {
-  val worker = new Worker()
+  private val worker = new Worker()
   
   def start() {
     worker.start()
@@ -14,4 +16,13 @@ object EventProcessor {
       () => event.trigger(value)
     }
   }
+  
+  class Worker extends Actor {
+    def act() {
+      eventloop {
+        case work: (() => Unit) => reply(work())
+      }
+    }
+  }
 }
+
