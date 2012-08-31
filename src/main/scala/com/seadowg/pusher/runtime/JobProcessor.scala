@@ -7,7 +7,7 @@ private[pusher] object JobProcessor {
   def process[T](work: => T): EventStream[T] = {
     new EventStream[T] {
       actor {
-        EventProcessor.process(this, work)
+        EventProcessor.process(this.event, work)
       }
     }
   }
