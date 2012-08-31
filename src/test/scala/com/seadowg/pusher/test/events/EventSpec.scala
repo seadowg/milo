@@ -1,4 +1,4 @@
-package com.seadowg.pusher.test
+package com.seadowg.pusher.test.events
 
 import org.specs2.mutable._
 import com.seadowg.pusher.events.Event
