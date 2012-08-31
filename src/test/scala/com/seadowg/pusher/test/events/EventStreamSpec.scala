@@ -24,5 +24,24 @@ class EventStreamSpec extends Specification {
       stream.event.trigger(true)
       executed must beTrue
     }
+    
+    "sends correct values to mapped EventStream events" in {
+      var sent = 0
+      val stream = new EventStream[Int]
+      stream.map(value => value * 2).event.bind(value => sent = value)
+      stream.event.trigger(1)
+      
+      sent mustEqual 2
+    }
+    
+    "sends only passing values to a filtered EventStream event" in {
+      var sent = 0
+      val stream = new EventStream[Int]
+      stream.filter(value => value > 1).event.bind(value => sent += value)
+      stream.event.trigger(1)
+      stream.event.trigger(2)
+      
+      sent mustEqual 2
+    }
   }
 }
