@@ -9,7 +9,7 @@ class Event[T] {
     callbacks += func
   }
   
-  def trigger(value: T) {
+  private[pusher] def trigger(value: T) {
     callbacks.foreach {
       callback => callback(value)
     }
