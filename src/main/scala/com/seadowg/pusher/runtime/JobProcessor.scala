@@ -1,14 +1,17 @@
 package com.seadowg.pusher.runtime
 
 import scala.actors.Actor.actor
+import com.seadowg.pusher.events.Event
 import com.seadowg.pusher.events.EventStream
 
 private[pusher] object JobProcessor {
   def process[T](work: => T): EventStream[T] = {
-    new EventStream[T] {
+    val event = new Event[T] {
       actor {
-        EventProcessor.process(this.event, work)
+        EventProcessor.process(this, work)
       }
     }
+    
+    new EventStream(event)
   }
 }
