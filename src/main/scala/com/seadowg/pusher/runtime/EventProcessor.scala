@@ -19,8 +19,10 @@ object EventProcessor {
   
   class Worker extends Actor {
     def act() {
-      eventloop {
-        case work: (() => Unit) => reply(work())
+      while (true) {
+        receive {
+          case work: (() => Unit) => reply(work())
+        }
       }
     }
   }
