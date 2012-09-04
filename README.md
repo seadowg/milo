@@ -15,7 +15,7 @@ An EventStream represents an infinite stream of values. We think of each value a
 EventStreams can have callbacks registered to them that are executed on each occurrence. For instance:
 
     val socket: EventStream[String] = new SocketEventStream(1337)
-    socket.hook {
+    socket.bind {
       message => println message
     }
     
@@ -44,10 +44,11 @@ executing with the returned value:
 
     async {
       database.query("SELECT * FROM users WHERE age == 25")
-    }.hook {
-      result => result.foreach {
-        row => println(row)
-      }
+    }.bind {
+      result => 
+        result.foreach {
+          row => println(row)
+        }
     }
     
 This allows EventStreams to be used in a similar manner to [Futures](http://docs.scala-lang.org/sips/pending/futures-promises.html)
@@ -60,7 +61,7 @@ Here is a short example of a program written using pusher and a SocketEventStrea
 with an EventStream:
 
     val socket = new SocketEventStream(1337)
-    socket.hook {
+    socket.bind {
       message =>
         async {
           println(message)
