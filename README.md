@@ -2,7 +2,7 @@
 
 ## Warning
 
-This readme represents the eventual goals of pusher, not its current cababilities.
+This readme represents the eventual goals of pusher, not its current capabilities.
 
 ## Description
 
@@ -11,7 +11,7 @@ events with asynchronous multithreaded programming. There are two key concepts i
 
 ### EventStream
 
-An EventStream represents an infinite stream of values. We think of each value as occuring at a specific (but implicit) point in time.
+An EventStream represents an infinite stream of values. We think of each value as occurring at a specific (but implicit) point in time.
 EventStreams can have callbacks registered to them that are executed on each occurrence. For instance:
 
     val socket: EventStream[String] = new SocketEventStream(1337)
@@ -38,8 +38,8 @@ the callback with long running operations such as I/O. To deal with this you can
       database.query("SELECT * FROM users WHERE age == 25")
     }
     
-Here the this database operation would be executed asynchronously in a seperate thread. Of course you will probably need access to the
-returned value for some `async` blocks. To facilitate this an `aync` block returns an EventStream that occurs when the block has finised
+Here the this database operation would be executed asynchronously in a separate thread. Of course you will probably need access to the
+returned value for some `async` blocks. To facilitate this an `aync` block returns an EventStream that occurs when the block has finished
 executing with the returned value:
 
     async {
@@ -49,6 +49,10 @@ executing with the returned value:
         row => println(row)
       }
     }
+    
+This allows EventStreams to be used in a similar manner to [Futures](http://docs.scala-lang.org/sips/pending/futures-promises.html)
+but with more generalised semantics (Futures refer to a value that may not have been set yet where as an EventStream represents a 
+stream of incoming values).
     
 ## Using
 
@@ -69,4 +73,4 @@ This program accepts `String` messages from a socket and prints them out (asynch
 
     EventProcessor.start()
     
-This call starts pusher's event loop that processes occuring Events and runs callbacks. This should always be the last line in your pusher code.
+This call starts pusher's event loop that processes occurring Events and runs callbacks. This should always be the last line in your pusher code.
