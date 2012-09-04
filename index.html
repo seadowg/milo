@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Pusher by oetzi</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Pusher</h1>
+        <p>A dirty FRP framework for async programming.</p>
+
+        <p class="view"><a href="https://github.com/oetzi/pusher">View the Project on GitHub <small>oetzi/pusher</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/oetzi/pusher/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/oetzi/pusher/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/oetzi/pusher">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>Description</h2>
+
+<p>Inspired by Functional Reactive Programming and async frameworks such as node.js 'pusher' combines declarative stream-like
+events with asynchronous multithreaded programming. There are two key concepts in pusher: <code>EventStream</code> and <code>async</code> blocks.</p>
+
+<h3>EventStream</h3>
+
+<p>An EventStream represents an infinite stream of values. We think of each value as occurring at a specific (but implicit) point in time.
+EventStreams can have callbacks registered to them that are executed on each occurrence. For instance:</p>
+
+<pre><code>val socket: EventStream[String] = new SocketEventStream(1337)
+socket.bind {
+  message =&gt; println message
+}
+</code></pre>
+
+<p>EventStreams can also support standard stream operations. For instance we can <code>map</code> EventStreams:</p>
+
+<pre><code>val loweredSocket = socket.map(string =&gt; string.toLower())
+</code></pre>
+
+<p>Or, <code>filter</code> them:</p>
+
+<pre><code>val shortSocket = socket.filter(string =&gt; string.length &lt; 5)
+</code></pre>
+
+<p>In many ways EventStreams can be treated in a similar manner to Backbone.js' Event but with extra functionality.</p>
+
+<h3>'async' Block</h3>
+
+<p>Most of the basic work in pusher can be carried out using callbacks on EventStreams but sometimes you won't want to hold up
+the callback with long running operations such as I/O. To deal with this you can use the <code>async</code> block:</p>
+
+<pre><code>async {
+  database.query("SELECT * FROM users WHERE age == 25")
+}
+</code></pre>
+
+<p>Here the this database operation would be executed asynchronously in a separate thread. Of course you will probably need access to the
+returned value for some <code>async</code> blocks. To facilitate this an <code>aync</code> block returns an EventStream that occurs when the block has finished
+executing with the returned value:</p>
+
+<pre><code>async {
+  database.query("SELECT * FROM users WHERE age == 25")
+}.bind {
+  result =&gt; 
+    result.foreach {
+      row =&gt; println(row)
+    }
+}
+</code></pre>
+
+<p>This allows EventStreams to be used in a similar manner to <a href="http://docs.scala-lang.org/sips/pending/futures-promises.html">Futures</a>
+but with more generalised semantics (Futures refer to a value that may not have been set yet where as an EventStream represents a 
+stream of incoming values).</p>
+
+<h2>Using</h2>
+
+<p>Here is a short example of a program written using pusher and a SocketEventStream (not actually implemented in pusher) that represents a unix socket
+with an EventStream:</p>
+
+<pre><code>val socket = new SocketEventStream(1337)
+socket.bind {
+  message =&gt;
+    async {
+      println(message)
+    }
+}
+
+EventProcessor.start()
+</code></pre>
+
+<p>This program accepts <code>String</code> messages from a socket and prints them out (asynchronously). You'll notice that at the end of the program we do the following:</p>
+
+<pre><code>EventProcessor.start()
+</code></pre>
+
+<p>This call starts pusher's event loop that processes occurring Events and runs callbacks. This should always be the last line in your pusher code.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/oetzi">oetzi</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
