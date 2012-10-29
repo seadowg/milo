@@ -1,5 +1,7 @@
 # pusher
 
+![](http://f.cl.ly/items/3h0j1h1m232P0C2F3A0Y/pusher1.preview.jpg)
+
 ## Warning
 
 This readme represents the eventual goals of pusher, not its current capabilities.
