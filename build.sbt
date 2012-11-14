@@ -1,4 +1,4 @@
-name := "pusher"
+name := "milo"
 
 version := "0.0.1"
 

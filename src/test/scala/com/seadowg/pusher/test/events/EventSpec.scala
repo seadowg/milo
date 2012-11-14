@@ -1,7 +1,7 @@
-package com.seadowg.pusher.test.events
+package com.seadowg.milo.test.events
 
 import org.specs2.mutable._
-import com.seadowg.pusher.events.Event
+import com.seadowg.milo.events.Event
 
 class EventSpec extends Specification {
   "Event" should {

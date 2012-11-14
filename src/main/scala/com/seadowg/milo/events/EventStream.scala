@@ -1,4 +1,4 @@
-package com.seadowg.pusher.events
+package com.seadowg.milo.events
 
 class EventStream[T](val event: Event[T]) {
   def this() {

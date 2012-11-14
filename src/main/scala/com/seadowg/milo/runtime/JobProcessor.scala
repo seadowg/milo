@@ -1,8 +1,8 @@
-package com.seadowg.pusher.runtime
+package com.seadowg.milo.runtime
 
 import scala.actors.Actor.actor
-import com.seadowg.pusher.events.Event
-import com.seadowg.pusher.events.EventStream
+import com.seadowg.milo.events.Event
+import com.seadowg.milo.events.EventStream
 
 object JobProcessor {
   def process[T](work: () => T): EventStream[T] = {

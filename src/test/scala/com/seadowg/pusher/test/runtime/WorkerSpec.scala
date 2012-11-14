@@ -1,7 +1,7 @@
 package com.seadowg.pusher.test.runtime
 
 import org.specs2.mutable._
-import com.seadowg.pusher.runtime.EventProcessor
+import com.seadowg.milo.runtime.EventProcessor
 
 class WorkerSpec extends Specification {
   "Worker" should {

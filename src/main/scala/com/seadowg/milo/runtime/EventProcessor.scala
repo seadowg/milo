@@ -1,8 +1,8 @@
-package com.seadowg.pusher.runtime
+package com.seadowg.milo.runtime
 
 import scala.actors.Actor
 import scala.actors.Actor._
-import com.seadowg.pusher.events.Event
+import com.seadowg.milo.events.Event
 
 object EventProcessor {
   private val worker = new Worker()

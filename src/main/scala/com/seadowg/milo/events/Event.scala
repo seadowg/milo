@@ -1,4 +1,4 @@
-package com.seadowg.pusher.events
+package com.seadowg.milo.events
 
 import scala.collection.mutable.ArrayBuffer
 
