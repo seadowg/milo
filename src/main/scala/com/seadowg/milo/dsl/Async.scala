@@ -1,11 +1,17 @@
 package com.seadowg.milo.dsl
 
 import scala.actors.Actor.actor
-import com.seadowg.milo.events.EventStream
-import com.seadowg.milo.runtime.JobProcessor
+import com.seadowg.milo.events._
+import com.seadowg.milo.runtime.EventProcessor
 
 object Async {
   def async[T](work: => T): EventStream[T] = {
-    JobProcessor.process(() => work)
+    val event = new Event[T] {
+      actor {
+        EventProcessor.process(this, work)
+      }
+    }
+    
+    new EventStream(event)
   }
 }

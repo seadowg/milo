@@ -1,12 +1,12 @@
 package com.seadowg.pusher.test.runtime
 
 import org.specs2.mutable._
-import com.seadowg.milo.runtime.EventProcessor
+import com.seadowg.milo.runtime.Worker
 
 class WorkerSpec extends Specification {
   "Worker" should {
     "execute sent work" in {
-      val worker = new EventProcessor.Worker()
+      val worker = new Worker()
       var executed = false
       worker.start()
       
@@ -18,7 +18,7 @@ class WorkerSpec extends Specification {
     }
     
     "should accept more than one message" in {
-      val worker = new EventProcessor.Worker()
+      val worker = new Worker()
       var executed = 0
       worker.start()
       

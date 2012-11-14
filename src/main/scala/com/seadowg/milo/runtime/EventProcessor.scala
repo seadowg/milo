@@ -1,12 +1,8 @@
 package com.seadowg.milo.runtime
 
-import scala.actors.Actor
-import scala.actors.Actor._
 import com.seadowg.milo.events.Event
 
-object EventProcessor {
-  private val worker = new Worker()
-  
+class EventProcessor(private val worker: Worker) {  
   def start() {
     worker.start()
   }
@@ -16,15 +12,23 @@ object EventProcessor {
       () => event.trigger(value)
     }
   }
-  
-  class Worker extends Actor {
-    def act() {
-      while (true) {
-        receive {
-          case work: (() => Unit) => reply(work())
-        }
-      }
-    }
-  }
 }
 
+object EventProcessor {
+  private var processor: EventProcessor = null
+  
+  def start() {
+    if (this.processor == null) {
+       this.processor = new EventProcessor(new Worker())
+       this.processor.start()
+    }
+    
+    else {
+      this.processor.start()
+    }
+  }
+  
+  def process[T](event: Event[T], value: T) {
+    this.processor.process(event, value)
+  }
+}
