@@ -8,7 +8,7 @@ class EventProcessor(private val worker: Worker) {
   }
   
   def process[T](event: Event[T], value: T) {
-    worker ! {
+    worker send {
       () => event.trigger(value)
     }
   }
