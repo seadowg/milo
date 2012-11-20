@@ -8,13 +8,13 @@ class EventProcessor(private val worker: WorkerQueue[_]) {
   }
   
   def process[T](event: Event[T], value: T) {
-    worker send {
+    worker.send {
       () => event.trigger(value)
     }
   }
   
   def kill() {
-    worker send(-1)
+    worker.send(-1)
   }
 }
 
