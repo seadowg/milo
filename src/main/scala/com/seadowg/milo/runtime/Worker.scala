@@ -3,19 +3,23 @@ package com.seadowg.milo.runtime
 import scala.actors.Actor
 import scala.actors.Actor._
 
-trait EventWorkerQueue[T] {
+trait WorkerQueue[T] {
   def start(): T
   def run(): Unit
   def send(message: Any): Unit
 }
 
-class Worker extends EventWorkerQueue[Actor] with Actor {
+class Worker extends WorkerQueue[Actor] with Actor {
   val act = run
   
   def run() {
-    while (true) {
+    var keepRunning = true
+    
+    while (keepRunning) {
       receive {
         case work: (() => Unit) => reply(work())
+        case -1 => keepRunning = false
+        case _ => 0
       }
     }
   }

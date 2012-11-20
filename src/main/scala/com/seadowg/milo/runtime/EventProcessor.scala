@@ -2,7 +2,7 @@ package com.seadowg.milo.runtime
 
 import com.seadowg.milo.events.Event
 
-class EventProcessor(private val worker: Worker) {  
+class EventProcessor(private val worker: WorkerQueue[_]) {  
   def start() {
     worker.start()
   }
@@ -11,6 +11,10 @@ class EventProcessor(private val worker: Worker) {
     worker send {
       () => event.trigger(value)
     }
+  }
+  
+  def kill() {
+    worker send(-1)
   }
 }
 
