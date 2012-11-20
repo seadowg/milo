@@ -16,7 +16,7 @@ class Worker extends WorkerQueue[Actor] with Actor {
     var keepRunning = true
     
     while (keepRunning) {
-      receive {
+      self.receive {
         case work: (() => Unit) => reply(work())
         case -1 => keepRunning = false
         case _ => 0
