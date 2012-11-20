@@ -10,7 +10,7 @@ trait WorkerQueue[T] {
 }
 
 class Worker extends WorkerQueue[Actor] with Actor {
-  val act = run
+  def act() = run()
   
   def run() {
     var keepRunning = true
