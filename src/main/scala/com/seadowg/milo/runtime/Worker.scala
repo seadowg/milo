@@ -9,7 +9,7 @@ trait WorkerQueue[T] {
   def send(message: Any): Unit
 }
 
-class Worker extends WorkerQueue[Actor] with Actor {
+class ActorWorker extends WorkerQueue[Actor] with Actor {
   def act() = run()
   
   def run() {

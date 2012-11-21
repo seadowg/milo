@@ -23,7 +23,7 @@ object EventProcessor {
   
   def start() {
     if (this.processor == null) {
-       this.processor = new EventProcessor(new Worker())
+       this.processor = new EventProcessor(new ActorWorker())
        this.processor.start()
     }
     
