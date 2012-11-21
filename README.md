@@ -5,7 +5,7 @@
 ## Description
 
 Inspired by Functional Reactive Programming and async frameworks such as node.js 'milo' combines declarative stream-like
-events with asynchronous multithreaded programming. There are two key concepts in milo: `EventStream`s and `async` blocks.
+events with asynchronous multithreaded programming. There are two key concepts in milo: `EventStream` and `async`.
 
 ### EventStream
 
@@ -73,3 +73,9 @@ This program accepts `String` messages from a socket and prints them out (asynch
     EventProcessor.start()
     
 This call starts milo's event loop that processes occurring Events and runs callbacks. This should always be the last line in your milo code.
+
+### sbt
+
+You can include milo as a dependency in sbt in the following way in your `build.sbt`:
+
+    libraryDependencies += "milo" % "milo" % "0.0.1" from "http://raw.github.com/oetzi/milo/master/release/milo_2.9.2-0.0.1.jar"
