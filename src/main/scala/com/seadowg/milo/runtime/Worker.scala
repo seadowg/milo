@@ -21,7 +21,7 @@ class ActorWorker extends WorkerQueue[Actor] with Actor {
     
     while (keepRunning) {
       self.receive {
-        case work: (() => Unit) => reply(work())
+        case work: (() => Unit) => work()
         case -1 => keepRunning = false
         case _ => 0
       }
