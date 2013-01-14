@@ -8,6 +8,7 @@ resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/release
 
 libraryDependencies ++= Seq(
   "org.specs2" %% "specs2" % "1.13" % "test",
-  "org.mockito" % "mockito-all" % "1.9.0",
-  "com.typesafe.akka" %% "akka-actor" % "2.1.0"
+  "org.mockito" % "mockito-all" % "1.9.0"
 )
+
+parallelExecution in Test := false
