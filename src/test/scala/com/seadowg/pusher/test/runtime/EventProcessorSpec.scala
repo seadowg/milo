@@ -12,7 +12,7 @@ class EventProcessorSpec extends Specification with Mockito {
     
     "start its worker" in {
       eventProcessor.start()
-      there was one(mockWorker).start()
+      there was one(mockWorker).spawn()
     }
   }
   
@@ -37,7 +37,7 @@ class EventProcessorSpec extends Specification with Mockito {
   }
   
   class TestWorker extends WorkerQueue[Int] {
-    def start() = 0
+    def spawn() {}
     def run() {}
     def send(message: Any) {}
   }

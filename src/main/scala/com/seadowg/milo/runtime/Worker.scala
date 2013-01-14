@@ -4,13 +4,17 @@ import scala.actors.Actor
 import scala.actors.Actor._
 
 trait WorkerQueue[T] {
-  def start(): T
+  def spawn(): Unit
   def run(): Unit
   def send(message: Any): Unit
 }
 
 class ActorWorker extends WorkerQueue[Actor] with Actor {
-  def act() = run()
+	def act() = run()
+	
+	def spawn() {
+		this.start()
+	}
   
   def run() {
     var keepRunning = true

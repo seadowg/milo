@@ -36,5 +36,14 @@ class EventSpec extends Specification {
       
       passed mustEqual 1
     }
+		
+		"returns itself on bind" in {
+      val event = new Event[Int]
+      val returned = event.bind {
+        value => 5
+      }
+			
+			returned mustEqual event
+		}
   }
 }

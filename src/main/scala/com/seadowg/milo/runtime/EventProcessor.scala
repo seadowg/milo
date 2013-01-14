@@ -4,7 +4,7 @@ import com.seadowg.milo.events.Event
 
 class EventProcessor(private val worker: WorkerQueue[_]) {  
   def start() {
-    worker.start()
+    worker.spawn()
   }
   
   def process[T](event: Event[T], value: T) {
