@@ -5,7 +5,7 @@ class EventStream[T](val event: Event[T]) {
     this(new Event[T])
   }
   
-  def bind(func: T => Unit) {
+  def bind(func: T => Unit): Event[T] = {
     this.event.bind(func)
   }
   
