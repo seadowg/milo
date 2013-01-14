@@ -4,7 +4,6 @@ import scala.collection.mutable.Queue
 
 trait WorkerQueue {
   def spawn(): Unit
-  def run(): Unit
   def send(message: () => Unit): Unit
 }
 
@@ -20,16 +19,16 @@ class ThreadWorker extends WorkerQueue {
 		}).start()
 	}
   
-  def run() {
-    while (true) {
-      this.receive().foreach(work => work())
-    }
-  }
-  
   def send(message: () => Unit) {
 		this.synchronized {
 			this.queue += message
 		}
+  }
+	
+  private def run() {
+    while (true) {
+      this.receive().foreach(work => work())
+    }
   }
 	
 	private def receive(): Option[() => Unit] = {

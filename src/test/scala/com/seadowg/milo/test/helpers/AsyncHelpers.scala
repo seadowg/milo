@@ -29,7 +29,6 @@ object AsyncHelpers {
 	
   class TestWorker extends WorkerQueue {
     def spawn() {}
-    def run() {}
     def send(message: () => Unit) {}
   }
 }
