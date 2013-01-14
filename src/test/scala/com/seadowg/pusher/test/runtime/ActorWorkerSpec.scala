@@ -1,44 +1,26 @@
-package com.seadowg.pusher.test.runtime
+package com.seadowg.milo.test.runtime
 
 import org.specs2.mutable._
 import org.specs2.mock._ 
+import com.seadowg.milo.test.helpers.AsyncHelpers._
 import com.seadowg.milo.runtime._
 import com.seadowg.milo.events.Event
 
-class ActorWorkerSpec extends Specification with Mockito {
-  "ActorWorker" should {
+class ThreadWorkerSpec extends Specification with Mockito {
+  "ThreadWorker" should {
 		"execute work it is sent" in {
-			val worker = new ActorWorker()
+			val worker = new ThreadWorker()
 			var executed = false
 			
 			worker.spawn()
+			
 			worker.send(() => executed = true)
+			waitUntil(() => executed) mustEqual true
+			executed = false
 			
-			waitUntil(() => executed)
-			worker.send(-1)
+			worker.send(() => executed = true)
+			waitUntil(() => executed) mustEqual true
 		}
-	}
-	
-	def waitUntil(condition: () => Boolean) = {
-		var waiting = true
-		var waited = 0
-
-		while(waiting) {
-			if (condition()) {
-				waiting = false
-			}
-			
-			else {
-				if (waited == 200) {
-					condition() mustEqual true
-				}
-				
-				waited += 1
-				Thread.sleep(5)
-			}
-		}
-		
-		condition() mustEqual true
 	}
 }
 

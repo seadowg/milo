@@ -1,8 +1,9 @@
-package com.seadowg.pusher.test.runtime
+package com.seadowg.milo.test.runtime
 
 import org.specs2.mutable._
 import org.specs2.mock._ 
 import com.seadowg.milo.runtime._
+import com.seadowg.milo.test.helpers.AsyncHelpers._
 import com.seadowg.milo.events.Event
 
 class EventProcessorSpec extends Specification with Mockito {
@@ -24,21 +25,5 @@ class EventProcessorSpec extends Specification with Mockito {
       eventProcessor.process(new Event[Int], 5)
       there was one(mockWorker).send(any[() => Unit])
     }
-  }
-  
-  "kill" should {
-    val mockWorker = mock[TestWorker]
-    val eventProcessor = new EventProcessor(mockWorker)
-    
-    "send a kill (-1) value to the worker" in {
-      eventProcessor.kill()
-      there was one(mockWorker).send(-1)
-    }
-  }
-  
-  class TestWorker extends WorkerQueue[Int] {
-    def spawn() {}
-    def run() {}
-    def send(message: Any) {}
   }
 }

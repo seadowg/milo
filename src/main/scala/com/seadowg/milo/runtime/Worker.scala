@@ -1,34 +1,46 @@
 package com.seadowg.milo.runtime
 
-import scala.actors.Actor
-import scala.actors.Actor._
+import scala.collection.mutable.Queue
 
-trait WorkerQueue[T] {
+trait WorkerQueue {
   def spawn(): Unit
   def run(): Unit
-  def send(message: Any): Unit
+  def send(message: () => Unit): Unit
 }
 
-class ActorWorker extends WorkerQueue[Actor] with Actor {
-	def act() = run()
+class ThreadWorker extends WorkerQueue {
+	private val queue = new Queue[() => Unit]
 	
 	def spawn() {
-		this.start()
+		val runner = this
+		new Thread(new Runnable() {
+			def run() {
+				runner.run()
+			}
+		}).start()
 	}
   
   def run() {
-    var keepRunning = true
-    
-    while (keepRunning) {
-      self.receive {
-        case work: (() => Unit) => work()
-        case -1 => keepRunning = false
-        case _ => 0
-      }
+    while (true) {
+      this.receive().foreach(work => work())
     }
   }
   
-  def send(message: Any) {
-    this.!(message)
+  def send(message: () => Unit) {
+		this.synchronized {
+			this.queue += message
+		}
   }
+	
+	private def receive(): Option[() => Unit] = {
+		this.synchronized {
+			if (this.queue.length > 0) { 
+				Some(this.queue.dequeue())
+			}
+			
+			else {
+				None
+			}
+		}
+	}
 }

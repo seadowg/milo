@@ -1,14 +1,13 @@
 name := "milo"
 
-version := "0.0.2"
+version := "0.0.3"
 
-scalaVersion := "2.9.2"
+scalaVersion := "2.10.0"
 
+resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
 
 libraryDependencies ++= Seq(
-  "org.specs2" %% "specs2" % "1.12.1" % "test",
-  "org.mockito" % "mockito-all" % "1.9.0" 
+  "org.specs2" %% "specs2" % "1.13" % "test",
+  "org.mockito" % "mockito-all" % "1.9.0",
+  "com.typesafe.akka" %% "akka-actor" % "2.1.0"
 )
-
-resolvers ++= Seq("snapshots" at "http://oss.sonatype.org/content/repositories/snapshots",
-                  "releases"  at "http://oss.sonatype.org/content/repositories/releases")
