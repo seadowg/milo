@@ -78,7 +78,7 @@ This call starts milo's event loop that processes occurring Events and runs call
 
 You can include milo as a dependency in sbt in the following way in your `build.sbt`:
 
-    libraryDependencies += "milo" % "milo" % "0.0.4" from "http://raw.github.com/oetzi/milo/master/release/milo_2.9.2-0.0.1.jar"
+    libraryDependencies += "milo" % "milo" % "0.0.4" from "http://raw.github.com/oetzi/milo/master/release/milo_2.10.0-0.0.4.jar"
     
 You can then need to require the following to enable full use of the framework:
 
