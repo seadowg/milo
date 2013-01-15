@@ -18,14 +18,10 @@ object EventProcessor {
   private var processor: EventProcessor = null
   
   def start() {
-    if (this.processor == null) {
-       this.processor = new EventProcessor(new ThreadWorker())
-       this.processor.start()
-    }
-    
-    else {
-      this.processor.start()
-    }
+  	if (this.processor == null) {
+			this.processor = new EventProcessor(new ThreadWorker())
+			this.processor.start()
+		}
   }
   
   def process[T](event: Event[T], value: T) {

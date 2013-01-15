@@ -18,10 +18,7 @@ class EventStream[T](val event: Event[T]) {
   def filter(func: T => Boolean): EventStream[T] = {
     val event = new Event[T]
     this.bind {
-      value =>
-        if (func(value)) {
-          event.trigger(value)
-        }
+      value => if (func(value)) event.trigger(value)
     }
     
     new EventStream(event)

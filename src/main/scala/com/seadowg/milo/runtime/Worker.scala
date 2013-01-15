@@ -21,16 +21,16 @@ class ThreadWorker extends Worker {
 		}
   }
 	
-  private def run() {
-    Stream.continually(this.receive()).foreach(work => work())
-  }
-	
 	private def receive(): () => Unit = {
 		this.synchronized {
 			if (this.queue.length < 1) this.wait()
 			this.queue.dequeue()
 		}
 	}
+	
+  private def run() {
+    Stream.continually(this.receive()).foreach(work => work())
+  }
 	
 	private class WorkerRunner(worker: ThreadWorker) extends Runnable {
 		def run() {
