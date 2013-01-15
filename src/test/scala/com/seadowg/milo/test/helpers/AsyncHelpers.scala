@@ -1,35 +1,20 @@
 package com.seadowg.milo.test.helpers
 
-import com.seadowg.milo.runtime.WorkerQueue
+import com.seadowg.milo.runtime.Worker
 
 object AsyncHelpers {
 	def waitUntil(condition: () => Boolean): Boolean = {
-		var waited = 0
-		var waiting = true
-
-		while(waiting) {
-			if (condition()) {
-				waiting = false
-			}
-			
-			else {
-				if (waited == 200) {
-					return false
-				}
-				
-				else {
-					waited += 1
-					Thread.sleep(5)
-				}
-			}
-		}
-		
-		true
+		Stream.continually(waitAndReturn(5, condition())).take(200).takeWhile(!_).length != 200
 	}
 	
-  class TestWorker extends WorkerQueue {
+  class TestWorker extends Worker {
     def spawn() {}
     def send(message: () => Unit) {}
   }
+	
+	private def waitAndReturn[T](time: Int, exp: => T): T = {
+		Thread.sleep(time)
+		exp
+	}
 }
 

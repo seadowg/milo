@@ -2,7 +2,7 @@ package com.seadowg.milo.runtime
 
 import com.seadowg.milo.events.Event
 
-class EventProcessor(private val worker: WorkerQueue) {  
+class EventProcessor(private val worker: Worker) {  
   def start() {
     worker.spawn()
   }
