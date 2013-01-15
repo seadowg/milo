@@ -17,21 +17,18 @@ class ThreadWorker extends Worker {
   def send(message: () => Unit) {
 		this.synchronized {
 			this.queue += message
+			this.notify()
 		}
   }
 	
   private def run() {
-    while (true) {
-      this.receive().foreach(work => work())
-    }
+    Stream.continually(this.receive()).foreach(work => work())
   }
 	
-	private def receive(): Option[() => Unit] = {
+	private def receive(): () => Unit = {
 		this.synchronized {
-			if (this.queue.length > 0) 
-				Some(this.queue.dequeue()) 
-			else 
-				None
+			if (this.queue.length < 1) this.wait()
+			this.queue.dequeue()
 		}
 	}
 	
