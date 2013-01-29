@@ -23,7 +23,7 @@ class ThreadWorker extends Worker {
 	
 	private def receive(): () => Unit = {
 		this.synchronized {
-			if (this.queue.length < 1) this.wait()
+			while (this.queue.length < 1) { this.wait() }
 			this.queue.dequeue()
 		}
 	}
