@@ -1,5 +1,7 @@
 # milo
 
+[![Build Status](https://travis-ci.org/oetzi/milo.png?branch=master)](https://travis-ci.org/oetzi/milo)
+
 ![](http://f.cl.ly/items/2u1n1c2A3S1e1r2X0R2n/pusher3.jpg)
 
 ## Description
