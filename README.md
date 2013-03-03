@@ -55,7 +55,7 @@ stream of incoming values).
     
 ## Using
 
-Here is a short example of a program written using milo and a SocketEventStream (not actually implemented in milo) that represents a unix socket
+Here is a short example of a program written using milo and a SocketEventStream (which is not actually implemented in milo) that represents a unix socket
 with an EventStream:
 
     val socket = new SocketEventStream(1337)
