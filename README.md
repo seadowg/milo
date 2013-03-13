@@ -18,15 +18,15 @@ EventStreams can have callbacks registered to them that are executed on each occ
     socket.bind {
       message => println message
     }
-    
+
 EventStreams can also support standard stream operations. For instance we can `map` EventStreams:
 
     val loweredSocket = socket.map(string => string.toLower())
-    
+
 Or, `filter` them:
-    
+
     val shortSocket = socket.filter(string => string.length < 5)
-    
+
 In many ways EventStreams can be treated in a similar manner to Backbone.js' Event but with extra functionality.
 
 ### 'async' Block
@@ -37,7 +37,7 @@ the callback with long running operations such as I/O. To deal with this you can
     async {
       database.query("SELECT * FROM users WHERE age == 25")
     }
-    
+
 Here the this database operation would be executed asynchronously in a separate thread. Of course you will probably need access to the
 returned value for some `async` blocks. To facilitate this an `aync` block returns an EventStream that occurs when the block has finished
 executing with the returned value:
@@ -45,16 +45,16 @@ executing with the returned value:
     async {
       database.query("SELECT * FROM users WHERE age == 25")
     }.bind {
-      result => 
+      result =>
         result.foreach {
           row => println(row)
         }
     }
-    
+
 This allows EventStreams to be used in a similar manner to [Futures](http://docs.scala-lang.org/sips/pending/futures-promises.html)
-but with more generalised semantics (Futures refer to a value that may not have been set yet where as an EventStream represents a 
+but with more generalised semantics (Futures refer to a value that may not have been set yet where as an EventStream represents a
 stream of incoming values).
-    
+
 ## Using
 
 Here is a short example of a program written using milo and a SocketEventStream (which is not actually implemented in milo) that represents a unix socket
@@ -67,21 +67,21 @@ with an EventStream:
           println(message)
         }
     }
-    
+
     EventProcessor.start()
-    
+
 This program accepts `String` messages from a socket and prints them out (asynchronously). You'll notice that at the end of the program we do the following:
 
     EventProcessor.start()
-    
+
 This call starts milo's event loop that processes occurring Events and runs callbacks. This should always be the last line in your milo code.
 
 ### Installing
 
 You can include milo as a dependency in sbt in the following way in your `build.sbt`:
 
-    libraryDependencies += "milo" % "milo" % "0.0.4" from "http://raw.github.com/oetzi/milo/master/release/milo_2.10.0-0.0.4.jar"
-    
+    libraryDependencies += "milo" % "milo" % "0.1.0" from "http://raw.github.com/oetzi/milo/master/release/milo_2.10.0-0.0.4.jar"
+
 You can then need to require the following to enable full use of the framework:
 
     import com.seadowg.milo.events._

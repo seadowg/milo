@@ -1,6 +1,6 @@
 name := "milo"
 
-version := "0.1.0.rc1"
+version := "0.1.0"
 
 scalaVersion := "2.10.0"
 
