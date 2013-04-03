@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>milo by oetzi</title>
+    <title>Pusher by seadowg</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -15,23 +15,23 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Milo</h1>
+        <h1>Pusher</h1>
         <p>A dirty FRP framework for async programming.</p>
 
-        <p class="view"><a href="https://github.com/oetzi/milo">View the Project on GitHub <small>oetzi/milo</small></a></p>
+        <p class="view"><a href="https://github.com/seadowg/milo">View the Project on GitHub <small>seadowg/milo</small></a></p>
 
 
         <ul>
-          <li><a href="https://github.com/oetzi/milo/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/oetzi/milo/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/oetzi/milo">View On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/seadowg/milo/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/seadowg/milo/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/seadowg/milo">View On <strong>GitHub</strong></a></li>
         </ul>
       </header>
       <section>
         <h2>Description</h2>
 
 <p>Inspired by Functional Reactive Programming and async frameworks such as node.js 'milo' combines declarative stream-like
-events with asynchronous multithreaded programming. There are two key concepts in milo: <code>EventStream</code> and <code>async</code> blocks.</p>
+events with asynchronous multithreaded programming. There are two key concepts in milo: <code>EventStream</code> and <code>async</code>.</p>
 
 <h3>EventStream</h3>
 
@@ -73,7 +73,7 @@ executing with the returned value:</p>
 <pre><code>async {
   database.query("SELECT * FROM users WHERE age == 25")
 }.bind {
-  result =&gt; 
+  result =&gt;
     result.foreach {
       row =&gt; println(row)
     }
@@ -81,12 +81,12 @@ executing with the returned value:</p>
 </code></pre>
 
 <p>This allows EventStreams to be used in a similar manner to <a href="http://docs.scala-lang.org/sips/pending/futures-promises.html">Futures</a>
-but with more generalised semantics (Futures refer to a value that may not have been set yet where as an EventStream represents a 
+but with more generalised semantics (Futures refer to a value that may not have been set yet where as an EventStream represents a
 stream of incoming values).</p>
 
 <h2>Using</h2>
 
-<p>Here is a short example of a program written using milo and a SocketEventStream (not actually implemented in milo) that represents a unix socket
+<p>Here is a short example of a program written using milo and a SocketEventStream (which is not actually implemented in milo) that represents a unix socket
 with an EventStream:</p>
 
 <pre><code>val socket = new SocketEventStream(1337)
@@ -106,9 +106,23 @@ EventProcessor.start()
 </code></pre>
 
 <p>This call starts milo's event loop that processes occurring Events and runs callbacks. This should always be the last line in your milo code.</p>
+
+<h3>Installing</h3>
+
+<p>You can include milo as a dependency in sbt in the following way in your <code>build.sbt</code>:</p>
+
+<pre><code>libraryDependencies += "milo" % "milo" % "0.1.0" from "http://raw.github.com/oetzi/milo/master/release/milo_2.10.0-0.1.0.jar"
+</code></pre>
+
+<p>You can then need to require the following to enable full use of the framework:</p>
+
+<pre><code>import com.seadowg.milo.events._
+import com.seadowg.milo.dsl._
+import com.seadowg.runtime.EventProcessor
+</code></pre>
       </section>
       <footer>
-        <p>This project is maintained by <a href="https://github.com/oetzi">oetzi</a></p>
+        <p>This project is maintained by <a href="https://github.com/seadowg">seadowg</a></p>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
