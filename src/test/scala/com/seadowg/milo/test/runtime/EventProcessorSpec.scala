@@ -8,17 +8,17 @@ import com.seadowg.milo.events.Event
 
 class EventProcessorSpec extends Specification with Mockito {
   "start" should {
-    val mockWorker = mock[TestWorker]
+    val mockWorker = mock[ThreadWorker]
     val eventProcessor = new EventProcessor(mockWorker)
     
-    "start its worker" in {
+    "start the worker" in {
       eventProcessor.start()
       there was one(mockWorker).spawn()
     }
   }
   
   "process" should {
-    val mockWorker = mock[TestWorker]
+    val mockWorker = mock[ThreadWorker]
     val eventProcessor = new EventProcessor(mockWorker)
     
     "send work to the worker" in {

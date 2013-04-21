@@ -8,19 +8,19 @@ import com.seadowg.milo.events.Event
 
 class ThreadWorkerSpec extends Specification with Mockito {
   "ThreadWorker" should {
-		"execute work it is sent" in {
-			val worker = new ThreadWorker()
-			var executed = false
-			
-			worker.spawn()
-			
-			worker.send(() => executed = true)
-			waitUntil(() => executed) mustEqual true
-			executed = false
-			
-			worker.send(() => executed = true)
-			waitUntil(() => executed) mustEqual true
-		}
-	}
+    "execute work it is sent" in {
+      val worker = new ThreadWorker()
+      var executed = false
+      
+      worker.spawn()
+      
+      worker.send(() => executed = true)
+      waitUntil(() => executed) mustEqual true
+      executed = false
+      
+      worker.send(() => executed = true)
+      waitUntil(() => executed) mustEqual true
+    }
+  }
 }
 
