@@ -23,4 +23,17 @@ class EventStream[T](val event: Event[T]) {
     
     new EventStream(event)
   }
+  
+  def merge(otherEvent: EventStream[T]): EventStream[T] = {
+    val event = new Event[T]
+    
+    this.bind {
+      value => event.trigger(value)
+    }
+    otherEvent.bind {
+      value => event.trigger(value)
+    }
+    
+    new EventStream(event)
+  }
 }

@@ -40,6 +40,21 @@ class EventStreamSpec extends Specification with Mockito {
         sent mustEqual 1
       }
     }
+    
+    "merge(event)" should {
+      "return a stream that contains the elements of both streams time interleaved" in {
+        var sent = 0
+        val stream1 = new EventStream[Int]
+        val stream2 = new EventStream[Int]
+        stream1.merge(stream2).event.bind(value => sent = value)
+        
+        stream1.event.trigger(1)
+        sent mustEqual 1
+        
+        stream2.event.trigger(2)
+        sent mustEqual 2
+      }
+    }
 
     "always have an event" in {
       val stream1 = new EventStream(new Event[Int])
