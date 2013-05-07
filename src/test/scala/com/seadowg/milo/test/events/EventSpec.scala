@@ -4,46 +4,29 @@ import org.specs2.mutable._
 import com.seadowg.milo.events.Event
 
 class EventSpec extends Specification {
-  "Event" should {
-    "not execute callbacks without trigger" in {
-      var executed = false
+  "Event".title
+  
+  "#bind(func)" should {
+  	"returns the Event itself" in {
       val event = new Event[Int]
-      event.bind {
-        value => executed = true
+      val returned = event.bind {
+        value => 5
       }
-      
-      executed must beFalse
-    }
-    
-    "execute callbacks on trigger" in {
-      var executed = false
-      val event = new Event[Int]
-      event.bind {
-        value => executed = true
-      }
-      event.trigger(0)
-      
-      executed must beTrue
-    }
-    
-    "passes the correct value to callbacks" in {
+		
+  		returned mustEqual event
+  	}
+  }
+  
+  "#trigger(value)" should {
+    "executes callbacks using the passed value" in {
       var passed = 0
       val event = new Event[Int]
       event.bind {
         value => passed = value
       }
       event.trigger(1)
-      
+    
       passed mustEqual 1
     }
-		
-		"returns itself on bind" in {
-      val event = new Event[Int]
-      val returned = event.bind {
-        value => 5
-      }
-			
-			returned mustEqual event
-		}
   }
 }

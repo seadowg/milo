@@ -7,7 +7,9 @@ import com.seadowg.milo.test.helpers.AsyncHelpers._
 import com.seadowg.milo.events.Event
 
 class EventProcessorSpec extends Specification with Mockito {
-  "start" should {
+  "EventProcessor".title
+  
+  "#start()" should {
     val mockWorker = mock[ThreadWorker]
     val eventProcessor = new EventProcessor(mockWorker)
     
@@ -17,7 +19,7 @@ class EventProcessorSpec extends Specification with Mockito {
     }
   }
   
-  "process" should {
+  "#process(event, value)" should {
     val mockWorker = mock[ThreadWorker]
     val eventProcessor = new EventProcessor(mockWorker)
     

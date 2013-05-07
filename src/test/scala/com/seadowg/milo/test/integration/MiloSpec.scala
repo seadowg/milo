@@ -8,21 +8,23 @@ import com.seadowg.milo.dsl.Async._
 import com.seadowg.milo.test.helpers.AsyncHelpers._
 
 class MiloSpec extends Specification with Mockito {
-  "Milo" should {
-    "work as designed" in {
+  "Milo".title
+  
+  "when used" should {
+    "function as expected" in {
       EventProcessor.start()
       var executed = false
-      
+    
       val event = new Event[Int]
       event.bind {
         v => executed = true
       }
-      
+    
       EventProcessor.process(event, 5)
-      
+    
       waitUntil(() => executed) mustEqual true
       executed = false
-      
+    
       event.bind {
         v => 
           async {
@@ -31,9 +33,9 @@ class MiloSpec extends Specification with Mockito {
             v => executed = true
           }
       }
-      
+    
       event.trigger(5)
-      
+    
       waitUntil(() => executed) mustEqual true
     }
   }
