@@ -13,30 +13,26 @@ class MiloSpec extends Specification with Mockito {
   "when used" should {
     "function as expected" in {
       EventProcessor.start()
-      var executed = false
-    
-      val event = new Event[Int]
-      event.bind {
-        v => executed = true
-      }
-    
-      EventProcessor.process(event, 5)
-    
-      waitUntil(() => executed) mustEqual true
-      executed = false
-    
-      event.bind {
+      var done = false
+      var passed = "nothing"
+      var event = new Event[Int]
+
+      new EventStream(event).map(_.toString).filter(_ != "123").bind {
         v => 
           async {
-            v
+            v.reverse
           }.bind {
-            v => executed = true
+            v => 
+              passed = v
+              done = true
           }
       }
     
-      event.trigger(5)
-    
-      waitUntil(() => executed) mustEqual true
+      EventProcessor.process(event, 123)
+      EventProcessor.process(event, 567)
+      
+      waitUntil(() => done) mustEqual true
+      passed mustEqual "765"
     }
   }
 }
