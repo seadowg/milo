@@ -7,7 +7,7 @@
 ## Description
 
 Inspired by Functional Reactive Programming and async frameworks such as node.js 'milo' combines declarative stream-like
-events with asynchronous multithreaded programming. There are two key concepts in milo: `EventStream` and `async`.
+events with asynchronous multi threaded programming. There are two key concepts in milo: `EventStream` and `async`.
 
 ### EventStream
 
@@ -39,7 +39,7 @@ the callback with long running operations such as I/O. To deal with this you can
     }
 
 Here the this database operation would be executed asynchronously in a separate thread. Of course you will probably need access to the
-returned value for some `async` blocks. To facilitate this an `aync` block returns an EventStream that occurs when the block has finished
+returned value for some `async` blocks. To facilitate this an `async` block returns an EventStream that occurs when the block has finished
 executing with the returned value:
 
     async {

@@ -1,14 +1,14 @@
 package com.seadowg.milo.runtime
 
-import scala.collection.mutable.Queue
+import scala.collection.mutable
 
 trait Worker {
-  def spawn(): Unit
-  def send(message: () => Unit): Unit
+  def spawn()
+  def send(message: () => Unit)
 }
 
 class ThreadWorker extends Worker {
-	private val queue = new Queue[() => Unit]
+	private val queue = new mutable.Queue[() => Unit]
 	
 	def spawn() {
 		new Thread(new WorkerRunner(this)).start()
